@@ -1,15 +1,21 @@
+// UGLY HACKs
 var treemap;
 var node;
-
-// UGLY HACK
 var goodType = 'tritanium';
 var comparisonType = 'average';
 
+// Just grabs a value based on Good Type (Tritanium, Wood, etc) and Comparison type (Min, Mean, Max)
 var valueFromGoodAndComparison = function(d) {
   var data = _.find(d.goods, function(good){
     return good.name == goodType
   });
   return data[comparisonType];
+};
+
+var sortRegionsByGoodAndComparison = function(root){
+  root.children = _.sortBy(root.children, function(region){
+    return valueFromGoodAndComparison(region)
+  });
 };
 
 var position = function position() {
@@ -23,6 +29,8 @@ var position = function position() {
   Adapted from http://bl.ocks.org/mbostock/4063582
  */
 var d3TreeMap = function(regionData) {
+
+  sortRegionsByGoodAndComparison(regionData);
 
   var margin = {top: 0, right: 0, bottom: 10, left: -80},
     width = 780,
@@ -56,16 +64,17 @@ var d3TreeMap = function(regionData) {
 };
 
 Meteor.startup(function(){
-  d3TreeMap(regions, 'average', 'tritanium');
+  d3TreeMap(regions);
 });
 
-// Rerender the treemap when our session vars change
+// Render the treemap when our session vars change
 Deps.autorun(function() {
   goodType = Session.get('goodType');
   comparisonType = Session.get('comparisonType');
   if (!treemap || !node) {
     return; // good 'ol 'break'
   }
+  sortRegionsByGoodAndComparison(regions);
   node.data(treemap.value(valueFromGoodAndComparison).nodes)
     .transition()
     .duration(1500)

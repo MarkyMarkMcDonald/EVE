@@ -1,5 +1,5 @@
-Template.comparisonType.events({
+Template.goodType.events({
   'change input': function(event){
-    Session.set('comparisonType', event.target.value);
+    Session.set('goodType', event.target.value);
   }
 });
