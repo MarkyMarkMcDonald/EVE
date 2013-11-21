@@ -1,4 +1,33 @@
 /* CSS declarations go here */
+body {
+  width: 960px;
+  position: relative;
+  margin: auto;
+}
+
+#TreeMap {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  position: relative;
+  float: right;
+  width: 780px;
+  cursor: pointer;
+}
+
+#TreeMap.deep1 {
+  cursor: auto;
+}
+
+.comparisonType {
+  float: right;
+  right: 80px;
+  position: relative;
+}
+
+.goodType {
+  float: left;
+}
+
 .node {
   border: solid 1px white;
   font: 10px sans-serif;
