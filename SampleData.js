@@ -1,4 +1,4 @@
-regions: [
+var regions = [
 	{
 		name: 'region1',
 		goods: [
